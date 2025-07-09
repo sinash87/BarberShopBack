@@ -6,27 +6,27 @@ import jakarta.persistence.*
 
 @Entity
 @Table
-data class Service(
+open class Service(
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(unique = true)
-	val id: Long = 0,
+	open val id: Long = 0,
 
 	@Column(nullable = false)
-	val name: String,
+	open val name: String,
 
 	@Column(columnDefinition = "TEXT")
-	val description: String? = null,
+	open val description: String? = null,
 
-	val price: Double,
-	val capacity: Int = 1,
+	open val price: Double,
+	open val capacity: Int = 1,
 
 	@Column(name = "duration_minutes")
-	val durationMinutes: Int? = null,
+	open val durationMinutes: Int? = null,
 
-	val isActive: Boolean = true,
+	open val isActive: Boolean = true,
 
 	@ManyToMany(mappedBy = "services")
-	val reservations: MutableList<Reservation> = mutableListOf(),
+	open val reservations: MutableList<Reservation> = mutableListOf(),
 
 	@OneToMany(mappedBy = "service", cascade = [CascadeType.ALL], orphanRemoval = true)
-	val availabilities: MutableList<Availability> = mutableListOf()
+	open val availabilities: MutableList<Availability> = mutableListOf()
 )

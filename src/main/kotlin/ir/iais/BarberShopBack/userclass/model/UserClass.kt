@@ -16,7 +16,7 @@ open class UserClass(
 	private var username: String,
 	open var phoneNumber: String,
 	private var password: String,
-	open var fullName: String,
+	open var fullName: String?,
 	open var enabled: Boolean = true,
 	@ElementCollection(fetch = FetchType.EAGER)
 	open var roles: List<String> = mutableListOf()
@@ -31,6 +31,10 @@ open class UserClass(
 
 	override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
 		return roles.map { SimpleGrantedAuthority(it) }.distinctBy { it.authority }.toMutableList()
+	}
+
+	fun setUsername(username: String) {
+		this.username = username
 	}
 
 	override fun getPassword(): String = password

@@ -7,13 +7,13 @@ import java.time.LocalDateTime
 
 @Entity
 @Table
-data class Reservation(
+open class Reservation(
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	val id: Long = 0,
+	open val id: Long? = 0,
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY , cascade = [(CascadeType.PERSIST)])
 	@JoinColumn(name = "user_id")
-	val user: UserClass,
+	 open var user: UserClass,
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
@@ -21,18 +21,17 @@ data class Reservation(
 		joinColumns = [JoinColumn(name = "reservation_id")],
 		inverseJoinColumns = [JoinColumn(name = "service_id")]
 	)
-	val services: MutableList<Service> = mutableListOf(),
+	open var services: MutableList<Service> = mutableListOf(),
+
+	open var startTime: LocalDateTime,
 
 	@Column(nullable = false)
-	val startTime: LocalDateTime,
-
-	@Column(nullable = false)
-	val endTime: LocalDateTime,
+	open var endTime: LocalDateTime,
 
 	@Enumerated(EnumType.STRING)
-	val status: ReservationStatus = ReservationStatus.ACTIVE,
+	open var status: ReservationStatus = ReservationStatus.ACTIVE,
 
-	val createdAt: LocalDateTime = LocalDateTime.now()
+	open val createdAt: LocalDateTime = LocalDateTime.now()
 ){
 	enum class ReservationStatus {
 		ACTIVE, CANCELLED, COMPLETED
