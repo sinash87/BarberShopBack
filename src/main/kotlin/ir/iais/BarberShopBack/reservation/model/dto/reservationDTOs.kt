@@ -15,20 +15,31 @@ class GetReservationDTO(
 	val services: List<GetServiceDTO>
 ): Serializable
 
+open class GetReservationForCreateDTO(
+	val username: String,
+	val phoneNumber: String,
+	val startTime: Long,
+	val endTime: Long,
+	val active: Reservation.ReservationStatus,
+	val services: List<String>
+): Serializable
+
 class GetReservationForUpdateDTO(
+	val id: Long,
 	username: String,
 	phoneNumber: String,
-	visitTime: Long,
+	startTime: Long,
+	endTime: Long,
 	active: Reservation.ReservationStatus,
 	services: List<String>
-)
+): GetReservationForCreateDTO(username , phoneNumber, startTime, endTime, active, services)
 
 
 fun Reservation.toGetReservation(): GetReservationDTO {
 	return GetReservationDTO(
-		id,
-		user.username,
-		user.phoneNumber,
+		id!!,
+		user!!.username,
+		user!!.phoneNumber,
 		startTime.toTimestamp(),
 		status,
 		services.map { it.toServiceDTO() }

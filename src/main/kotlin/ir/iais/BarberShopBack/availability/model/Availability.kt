@@ -7,21 +7,21 @@ import java.time.LocalTime
 
 @Entity
 @Table
-data class Availability(
+open class Availability(
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)@Column(unique = true)
-	val id: Long = 0,
+	open val id: Long = 0,
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "service_id", nullable = false)
-	val service: Service,
+	open val service: Service,
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	val dayOfWeek: DayOfWeek,
+	open val dayOfWeek: DayOfWeek,
 
 	@Column(nullable = false)
-	val startTime: LocalTime,
+	open val startTime: LocalTime,
 
 	@Column(nullable = false)
-	val endTime: LocalTime
+	open val endTime: LocalTime
 )
