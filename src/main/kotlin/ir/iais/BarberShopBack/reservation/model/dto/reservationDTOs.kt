@@ -12,7 +12,8 @@ class GetReservationDTO(
 	val phoneNumber: String,
 	val visitTime: Long,
 	val active: Reservation.ReservationStatus,
-	val services: List<GetServiceDTO>
+	val services: List<GetServiceDTO>,
+	val isUserGuest: Boolean,
 ): Serializable
 
 open class GetReservationForCreateDTO(
@@ -42,7 +43,8 @@ fun Reservation.toGetReservation(): GetReservationDTO {
 		user!!.phoneNumber,
 		startTime.toTimestamp(),
 		status,
-		services.map { it.toServiceDTO() }
+		services.map { it.toServiceDTO() },
+		user!!.roles.contains("guest")
 	)
 }
 
